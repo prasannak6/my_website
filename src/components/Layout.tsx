@@ -25,7 +25,19 @@ export default function Layout({ children }: LayoutProps) {
 
   useEffect(() => {
     setIsMenuOpen(false);
-  }, [location]);
+    
+    // Update document title based on current route
+    const baseTitle = "Er. Tekraj Khadka";
+    const currentNavItem = navItems.find(item => item.path === location.pathname);
+    
+    if (currentNavItem) {
+      document.title = currentNavItem.name === 'Home' 
+        ? `${baseTitle} | Civil Engineer`
+        : `${currentNavItem.name} | ${baseTitle}`;
+    } else {
+      document.title = baseTitle;
+    }
+  }, [location.pathname]);
 
   return (
     <div className="min-h-screen flex flex-col font-sans">
